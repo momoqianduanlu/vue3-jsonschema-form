@@ -9,7 +9,29 @@ export enum SchemaTypes {
   'BOOLEAN' = 'boolean',
 }
 
-// type Schema = any
+export interface VueJsonSchemaConfig {
+  title?: string
+  descrription?: string
+  component?: string
+  options?: {
+    [key: string]: any
+  }
+  withFormItem?: boolean
+  widget?: 'checkbox' | 'textarea' | 'select' | 'radio' | 'range' | string
+  items?: UISchema | UISchema[]
+  propertiesOrder?: string[]
+  controls?: {
+    sortable?: boolean
+    removeable?: boolean
+    addable?: boolean
+  }
+}
+
+export interface UISchema extends VueJsonSchemaConfig {
+  properties?: {
+    [property: string]: UISchema
+  }
+}
 
 type SchemaRef = { $ref: string }
 
@@ -25,13 +47,17 @@ export interface Schema {
     [key: string]: Schema | { $ref: string }
   }
   items?: Schema | Schema[] | SchemaRef
+  uniqueItems?: any
   dependencies?: {
     [key: string]: string[] | Schema | SchemaRef
   }
   oneOf?: Schema[]
-  // vjsf?: VueJsonSchemaConfig
+  anyOf?: Schema[]
+  allOf?: Schema[]
+  vjsf?: VueJsonSchemaConfig
   required?: string[]
   enum?: any[]
+  enumNames?: any[]
   enumKeyValue?: any[]
   additionalProperties?: any
   additionalItems?: Schema
@@ -44,6 +70,38 @@ export interface Schema {
   exclusiveMaximum?: number
   exclusiveMinimum?: number
 }
+
+// export interface Schema {
+//   type?: SchemaTypes | string
+//   const?: any
+//   format?: string
+
+//   title?: string
+//   default?: any
+
+//   properties?: {
+//     [key: string]: Schema | { $ref: string }
+//   }
+//   items?: Schema | Schema[] | SchemaRef
+//   dependencies?: {
+//     [key: string]: string[] | Schema | SchemaRef
+//   }
+//   oneOf?: Schema[]
+//   // vjsf?: VueJsonSchemaConfig
+//   required?: string[]
+//   enum?: any[]
+//   enumKeyValue?: any[]
+//   additionalProperties?: any
+//   additionalItems?: Schema
+
+//   minLength?: number
+//   maxLength?: number
+//   minimun?: number
+//   maximum?: number
+//   multipleOf?: number
+//   exclusiveMaximum?: number
+//   exclusiveMinimum?: number
+// }
 
 // export interface UISchemaNest {
 //   [property: string]: UISchema

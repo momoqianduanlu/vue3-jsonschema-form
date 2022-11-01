@@ -8,7 +8,7 @@ import { FieldPropsDefine } from '../types'
 export default defineComponent({
   name: 'NumberField',
   props: FieldPropsDefine,
-  setup(props, ctx) {
+  setup(props) {
     const handleOnChange = (v: any) => {
       console.log('v', v.target.value)
       props.onChange(Number(v.target.value))
